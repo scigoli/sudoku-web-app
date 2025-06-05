@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solver</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sudoku Solver</h1>
+        <form id="sudoku-form" method="POST" action="/solve">
+            <label for="sudoku-input">Enter Sudoku (comma-separated):</label>
+            <input type="text" id="sudoku-input" name="sudoku" required placeholder="1,0,0,0,0,0,0,0,0,...">
+            <button type="submit">Solve</button>
+        </form>
+        <div id="solution">
+            <h2>Solution:</h2>
+            <pre id="solution-output"></pre>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

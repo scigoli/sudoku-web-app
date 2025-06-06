@@ -65,4 +65,54 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         resultDiv.innerHTML = html;
     }
+
+    // Genera la griglia di input dinamicamente
+    const tbody = document.getElementById("sudoku-tbody");
+    if (tbody) {
+        for (let i = 0; i < 9; i++) {
+            const tr = document.createElement("tr");
+            for (let j = 0; j < 9; j++) {
+                const td = document.createElement("td");
+                let classes = [];
+                if (j % 3 === 0) classes.push("block-left");
+                if (i % 3 === 0) classes.push("block-top");
+                if (j === 8) classes.push("block-right");
+                if (i === 8) classes.push("block-bottom");
+                td.className = classes.join(" ");
+                const input = document.createElement("input");
+                input.type = "number";
+                input.min = "1";
+                input.max = "9";
+                input.className = "sudoku-cell";
+                input.id = `cell-${i}-${j}`;
+                input.style = "width:2em;text-align:center;";
+                td.appendChild(input);
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+        }
+    }
+
+    // Pulsante Test
+    document.getElementById("test-btn").addEventListener("click", function() {
+        const testVals = "5,3,0,0,7,0,0,0,0,6,0,0,1,9,5,0,0,0,0,9,8,0,0,0,0,6,0,8,0,0,0,6,0,0,0,3,4,0,0,8,0,3,0,0,1,7,0,0,0,2,0,0,0,6,0,6,0,0,0,0,2,8,0,0,0,0,4,1,9,0,0,5,0,0,0,0,8,0,0,7,9".split(",");
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                const idx = i * 9 + j;
+                const val = testVals[idx].trim();
+                const cell = document.getElementById(`cell-${i}-${j}`);
+                cell.value = val !== "0" ? val : "";
+            }
+        }
+    });
+
+    // Pulsante Clear
+    document.getElementById("clear-btn").addEventListener("click", function() {
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                const cell = document.getElementById(`cell-${i}-${j}`);
+                cell.value = "";
+            }
+        }
+    });
 });

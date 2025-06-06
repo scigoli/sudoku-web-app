@@ -1,6 +1,16 @@
 # Sudoku Web Application
 
-This project is a web application that allows users to input and solve Sudoku puzzles through a graphical interface. It utilizes Go for the backend and serves HTML, CSS, and JavaScript for the frontend.
+Questa applicazione web permette di inserire e risolvere puzzle Sudoku tramite un'interfaccia grafica moderna. Il backend è scritto in Go, mentre il frontend utilizza HTML, CSS e JavaScript.
+
+## Funzionalità principali
+
+- **Inserimento dati tramite griglia 9x9**: puoi inserire i numeri direttamente nelle celle della griglia. Le celle vuote sono considerate come zeri.
+- **Pulsanti di controllo**:
+  - **Solve**: risolve il Sudoku e mostra la soluzione in una tabella con evidenza dei valori di input.
+  - **Test**: popola la griglia con un esempio di Sudoku predefinito.
+  - **Clear**: svuota tutte le celle della griglia.
+- **Visualizzazione soluzione**: la soluzione viene mostrata in una tabella con bordi spessi per i blocchi 3x3 e i valori di input evidenziati in grassetto e con sfondo azzurrino.
+- **Tempo di risoluzione**: sotto la soluzione viene indicato il tempo impiegato per la risoluzione (in millisecondi).
 
 ## Project Structure
 
@@ -8,56 +18,57 @@ This project is a web application that allows users to input and solve Sudoku pu
 sudoku-web-app
 ├── cmd
 │   └── server
-│       └── main.go          # Entry point of the web application
+│       └── main.go          # Entry point dell'applicazione web
 ├── internal
 │   ├── sudoku
-│   │   ├── solver.go        # Logic for solving Sudoku puzzles
-│   │   └── utils.go         # Utility functions for Sudoku
+│   │   ├── solver.go        # Logica di risoluzione Sudoku
+│   │   └── utils.go         # Utility
 │   └── web
-│       ├── handler.go       # HTTP handlers for the web application
+│       ├── handler.go       # HTTP handler
 │       └── templates
-│           └── index.html   # HTML template for the main page
+│           └── index.html   # Template HTML principale
 ├── static
 │   ├── css
-│   │   └── style.css        # CSS styles for the web application
+│   │   └── style.css        # Stili CSS
 │   └── js
-│       └── app.js           # JavaScript for client-side interactions
-├── go.mod                   # Go module definition
-├── go.sum                   # Checksums for module dependencies
-└── README.md                # Documentation for the project
+│       └── app.js           # JavaScript per interazione client
+├── go.mod                   # Modulo Go
+├── go.sum                   # Checksum dipendenze
+└── README.md                # Documentazione
 ```
 
 ## Setup Instructions
 
-1. **Clone the repository:**
+1. **Clona il repository:**
    ```
    git clone https://github.com/scigoli/sudoku-web-app
    cd sudoku-web-app
    ```
 
-2. **Install dependencies:**
+2. **Installa le dipendenze:**
    ```
    go mod tidy
    ```
 
-3. **Run the application:**
+3. **Avvia l'applicazione:**
    ```
    go run cmd/server/main.go
    ```
 
-4. **Access the application:**
-   Open your web browser and navigate to `http://localhost:8080`.
+4. **Accedi all'applicazione:**
+   Apri il browser e vai su `http://localhost:8080`.
 
-## Usage
+## Utilizzo
 
-- Input a Sudoku puzzle in the provided format (use `0` for empty cells).
-- Click the "Solve" button to find the solution.
-- The solution will be displayed on the same page.
+- **Inserisci i numeri** nella griglia 9x9. Lascia vuote le celle che vuoi siano considerate come zeri.
+- Puoi usare il pulsante **Test** per caricare un esempio di Sudoku.
+- Premi **Solve** per vedere la soluzione e il tempo di risoluzione.
+- Premi **Clear** per svuotare la griglia e inserire un nuovo puzzle.
 
-## Contributing
+## Contribuire
 
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+Contributi sono benvenuti! Apri una issue o una pull request per suggerimenti o correzioni.
 
-## License
+## Licenza
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+Questo progetto è distribuito con licenza MIT. Vedi il file LICENSE per dettagli.

@@ -112,7 +112,44 @@ button:hover {
 }
 
 #sudoku-table {
-    margin: 0 auto 20px auto;
+    border-collapse: collapse;
+    margin: 20px auto;
+    box-shadow: 0 0 10px #aaa;
+}
+
+#sudoku-table td {
+    width: 2.5em;
+    height: 2.5em;
+    text-align: center;
+    border: 2px solid #333;
+    background: #fff;
+    padding: 0;
+}
+
+#sudoku-table input[type="number"] {
+    width: 2.5em;
+    height: 2.5em;
+    font-size: 1.3em;
+    text-align: center;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+#sudoku-table td.block-right {
+    border-right-width: 4px;
+}
+
+#sudoku-table td.block-bottom {
+    border-bottom-width: 4px;
+}
+
+#sudoku-table td.block-left {
+    border-left-width: 4px;
+}
+
+#sudoku-table td.block-top {
+    border-top-width: 4px;
 }
 
 #sudoku-form {

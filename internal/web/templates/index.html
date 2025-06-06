@@ -18,7 +18,12 @@
                 for (let i = 0; i < 9; i++) {
                     document.write('<tr>');
                     for (let j = 0; j < 9; j++) {
-                        document.write(`<td><input type="number" min="1" max="9" class="sudoku-cell" id="cell-${i}-${j}" style="width:2em;text-align:center;"></td>`);
+                        let classes = [];
+                        if (j % 3 === 0) classes.push('block-left');
+                        if (i % 3 === 0) classes.push('block-top');
+                        if (j === 8) classes.push('block-right');
+                        if (i === 8) classes.push('block-bottom');
+                        document.write(`<td class='${classes.join(' ')}'><input type="number" min="1" max="9" class="sudoku-cell" id="cell-${i}-${j}" style="width:2em;text-align:center;"></td>`);
                     }
                     document.write('</tr>');
                 }

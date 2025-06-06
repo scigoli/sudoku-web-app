@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"text/template"
+	"time"
 
 	"sudoku-web-app/internal/sudoku"
 
@@ -44,6 +45,8 @@ func solveHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Received request to solve Sudoku!")
 	w.Header().Set("Content-Type", "application/json")
 
+	start := time.Now() // tempo inizio
+
 	// Read and log the raw body
 	bodyBytes, _ := io.ReadAll(r.Body)
 	fmt.Println("Raw body:", string(bodyBytes))
@@ -69,13 +72,15 @@ func solveHandler(w http.ResponseWriter, r *http.Request) {
 	solved := sudoku.SolveSudoku(board)
 	fmt.Println("Sudoku solved:", solved)
 
+	elapsed := time.Since(start).Milliseconds()
+
 	if !solved {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(map[string]string{"error": "No solution found"})
 		return
 	}
 
-	json.NewEncoder(w).Encode(map[string]any{"solution": board})
+	json.NewEncoder(w).Encode(map[string]any{"solution": board, "elapsedMs": elapsed})
 }
 
 /*

@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             if (data.solution) {
-                displaySolution(data.solution, window.lastInputBoard);
+                displaySolution(data.solution, window.lastInputBoard, data.elapsedMs);
             } else {
                 resultDiv.innerHTML = "Nessuna soluzione trovata.";
             }
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    function displaySolution(solution, inputBoard) {
+    function displaySolution(solution, inputBoard, elapsedMs) {
         let html = "<h3>Soluzione:</h3><table class='sudoku-result-table'>";
         for (let i = 0; i < 9; i++) {
             html += "<tr>";
@@ -60,6 +60,9 @@ document.addEventListener("DOMContentLoaded", function() {
             html += "</tr>";
         }
         html += "</table>";
+        if (typeof elapsedMs !== "undefined") {
+            html += `<div class='solution-time'>Tempo impiegato: <b>${elapsedMs}</b> ms</div>`;
+        }
         resultDiv.innerHTML = html;
     }
 });

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-const N = 9
+//const N = 9
 
 func ParseInput(input string) ([][]int, error) {
 	parts := strings.Split(input, ",")

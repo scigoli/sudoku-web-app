@@ -1,6 +1,7 @@
 package web
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -21,22 +22,31 @@ func NewSudokuHandler() *SudokuHandler {
 
 func (h *SudokuHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		r.ParseForm()
-		input := r.FormValue("sudokuInput")
-		board, err := parseInput(input)
+		// Per richieste JSON
+		w.Header().Set("Content-Type", "application/json")
+
+		var req struct {
+			Board [][]int `json:"board"`
+		}
+		err := json.NewDecoder(r.Body).Decode(&req)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(map[string]string{"error": "Invalid JSON"})
 			return
 		}
 
-		if sudoku.SolveSudoku(board) {
-			h.Template.Execute(w, board)
-		} else {
-			http.Error(w, "No solution found", http.StatusBadRequest)
+		board := req.Board
+		if !sudoku.SolveSudoku(board) {
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(map[string]string{"error": "No solution found"})
+			return
 		}
+
+		json.NewEncoder(w).Encode(map[string]any{"solution": board})
 		return
 	}
 
+	// Per GET, mostra la pagina HTML
 	h.Template.Execute(w, nil)
 }
 
@@ -55,6 +65,11 @@ func parseInput(input string) ([][]int, error) {
 			return nil, fmt.Errorf("invalid value: %s", s)
 		}
 		board[i/9][i%9] = num
+	}
+	// Log the parsed board for debugging
+	fmt.Println("Parsed Sudoku board:")
+	for _, row := range board {
+		fmt.Println(row)
 	}
 	return board, nil
 }

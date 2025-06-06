@@ -6,48 +6,56 @@ document.addEventListener("DOMContentLoaded", function() {
 
     form.addEventListener("submit", function(event) {
         event.preventDefault();
-        const input = document.getElementById("sudoku-input").value;
-        const board = parseInput(input);
-        
-        if (board) {
-            fetch("/solve", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ board: board })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.solution) {
-                    displaySolution(data.solution);
-                } else {
-                    resultDiv.innerHTML = "Nessuna soluzione trovata.";
+        const board = [];
+        for (let i = 0; i < 9; i++) {
+            const row = [];
+            for (let j = 0; j < 9; j++) {
+                const cell = document.getElementById(`cell-${i}-${j}`);
+                let value = parseInt(cell.value, 10);
+                if (isNaN(value) || value < 1 || value > 9) {
+                    value = 0;
                 }
-            })
-            .catch(error => {
-                console.error("Errore:", error);
-                resultDiv.innerHTML = "Si è verificato un errore durante la risoluzione.";
-            });
-        } else {
-            resultDiv.innerHTML = "Input non valido. Assicurati di inserire 81 numeri separati da virgola.";
+                row.push(value);
+            }
+            board.push(row);
         }
+        // Salva la board di input per evidenziare i valori originali
+        window.lastInputBoard = board.map(row => row.slice());
+        fetch("/solve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ board: board })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.solution) {
+                displaySolution(data.solution, window.lastInputBoard);
+            } else {
+                resultDiv.innerHTML = "Nessuna soluzione trovata.";
+            }
+        })
+        .catch(error => {
+            console.error("Errore:", error);
+            resultDiv.innerHTML = "Si è verificato un errore durante la risoluzione.";
+        });
     });
 
-    function parseInput(input) {
-        const parts = input.split(",").map(num => parseInt(num.trim(), 10));
-        if (parts.length !== 81 || parts.some(num => isNaN(num) || num < 0 || num > 9)) {
-            return null;
-        }
-        return parts;
-    }
-
-    function displaySolution(solution) {
-        let html = "<h3>Soluzione:</h3><table>";
+    function displaySolution(solution, inputBoard) {
+        let html = "<h3>Soluzione:</h3><table class='sudoku-result-table'>";
         for (let i = 0; i < 9; i++) {
             html += "<tr>";
             for (let j = 0; j < 9; j++) {
-                html += `<td>${solution[i * 9 + j]}</td>`;
+                // Calcola le classi per i bordi spessi dei blocchi 3x3
+                let classes = [];
+                if (j % 3 === 0) classes.push("block-left");
+                if (i % 3 === 0) classes.push("block-top");
+                if (j === 8) classes.push("block-right");
+                if (i === 8) classes.push("block-bottom");
+                // Evidenzia i valori di input
+                if (inputBoard && inputBoard[i][j] !== 0) {
+                    classes.push("input-cell");
+                }
+                html += `<td class='${classes.join(" ")}' >${solution[i][j]}</td>`;
             }
             html += "</tr>";
         }

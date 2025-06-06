@@ -9,16 +9,55 @@
 <body>
     <div class="container">
         <h1>Sudoku Solver</h1>
-        <form id="sudoku-form" method="POST" action="/solve">
-            <label for="sudoku-input">Enter Sudoku (comma-separated):</label>
-            <input type="text" id="sudoku-input" name="sudoku" required placeholder="1,0,0,0,0,0,0,0,0,...">
-            <button type="submit">Solve</button>
+        <form id="sudoku-form">
+            <label>Inserisci la griglia Sudoku:</label>
+            <table id="sudoku-table">
+                <tbody>
+                <!-- Genera 9x9 input -->
+                <script>
+                for (let i = 0; i < 9; i++) {
+                    document.write('<tr>');
+                    for (let j = 0; j < 9; j++) {
+                        document.write(`<td><input type="number" min="1" max="9" class="sudoku-cell" id="cell-${i}-${j}" style="width:2em;text-align:center;"></td>`);
+                    }
+                    document.write('</tr>');
+                }
+                </script>
+                </tbody>
+            </table>
+            <div class="button-row">
+                <button type="submit">Solve</button>
+                <button type="button" id="test-btn">Test</button>
+                <button type="button" id="clear-btn">Clear</button>
+            </div>
         </form>
         <div id="solution">
             <h2>Solution:</h2>
             <pre id="solution-output"></pre>
         </div>
+        <div id="result"></div>
     </div>
     <script src="/static/js/app.js"></script>
+    <script>
+    document.getElementById("test-btn").addEventListener("click", function() {
+        const testVals = "5,3,0,0,7,0,0,0,0,6,0,0,1,9,5,0,0,0,0,9,8,0,0,0,0,6,0,8,0,0,0,6,0,0,0,3,4,0,0,8,0,3,0,0,1,7,0,0,0,2,0,0,0,6,0,6,0,0,0,0,2,8,0,0,0,0,4,1,9,0,0,5,0,0,0,0,8,0,0,7,9".split(",");
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                const idx = i * 9 + j;
+                const val = testVals[idx].trim();
+                const cell = document.getElementById(`cell-${i}-${j}`);
+                cell.value = val !== "0" ? val : "";
+            }
+        }
+    });
+    document.getElementById("clear-btn").addEventListener("click", function() {
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                const cell = document.getElementById(`cell-${i}-${j}`);
+                cell.value = "";
+            }
+        }
+    });
+    </script>
 </body>
 </html>

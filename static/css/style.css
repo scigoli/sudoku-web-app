@@ -32,7 +32,7 @@ button {
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -40,7 +40,7 @@ button {
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #0056b3;
 }
 
 .solution {
@@ -54,4 +54,92 @@ button:hover {
 .solution h2 {
     text-align: center;
     color: #333;
+}
+
+.sudoku-result-table {
+    border-collapse: collapse;
+    margin: 20px auto;
+    box-shadow: 0 0 10px #aaa;
+}
+
+.sudoku-result-table td {
+    width: 2.5em;
+    height: 2.5em;
+    text-align: center;
+    font-size: 1.3em;
+    border: 2px solid #333;
+    background: #fff;
+    transition: background 0.2s;
+}
+
+.sudoku-result-table .input-cell {
+    font-weight: bold;
+    background: #e6f7ff;
+}
+
+.sudoku-result-table tr {
+    border: none;
+}
+
+/* Bordo spesso per i blocchi 3x3 */
+.sudoku-result-table td {
+    border-width: 1px;
+}
+
+.sudoku-result-table td.block-right {
+    border-right-width: 4px;
+}
+
+.sudoku-result-table td.block-bottom {
+    border-bottom-width: 4px;
+}
+
+.sudoku-result-table td.block-left {
+    border-left-width: 4px;
+}
+
+.sudoku-result-table td.block-top {
+    border-top-width: 4px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fafbfc;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px #bbb;
+}
+
+#sudoku-table {
+    margin: 0 auto 20px auto;
+}
+
+#sudoku-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sudoku-form button {
+    margin: 0 8px 0 0;
+    padding: 8px 18px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #888;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#sudoku-form button:hover {
+    background: #0056b3;
+}
+
+#sudoku-form .button-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 12px;
 }

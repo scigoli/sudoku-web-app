@@ -70,6 +70,10 @@ sudoku-web-app
 ![Output](https://github.com/scigoli/sudoku-web-app/blob/main/test-output.png?raw=true)
 
 
+## Unit test
+   ```
+   go test ./internal/sudoku
+   ```
 
 ## Come contribuire
 

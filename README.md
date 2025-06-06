@@ -65,7 +65,13 @@ sudoku-web-app
 - Premi **Solve** per vedere la soluzione e il tempo di risoluzione.
 - Premi **Clear** per svuotare la griglia e inserire un nuovo puzzle.
 
-## Contribuire
+## Schermate
+![Input](https://github.com/scigoli/sudoku-web-app/blob/main/test-input.png?raw=true)
+![Output](https://github.com/scigoli/sudoku-web-app/blob/main/test-output.png?raw=true)
+
+
+
+## Come contribuire
 
 Contributi sono benvenuti! Apri una issue o una pull request per suggerimenti o correzioni.
 
